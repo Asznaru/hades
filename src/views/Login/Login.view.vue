@@ -30,14 +30,14 @@ onMounted(async() => {
   loginInput.value.focus()
 })
 
-const loginUser = () => {
+const loginUser = async() => {
   if(login.value.length > 3) {
     const date = new Date();
     date.setTime(date.getTime() + 24*60*60*1000)
     const expires = `expires=${date.toUTCString()}`
     document.cookie = `hades=${login.value}; ${expires}; path=/`;
     login.value = ''
-    router.push({name: 'Dashboard'})
+    await router.push({name: 'MainMenu'})
   }
 }
 </script>
@@ -57,8 +57,7 @@ const loginUser = () => {
              class="text-white shadow-hades p-2 border-[1px] border-gray-600 rounded-xs w-full mt-2 mb-8 focus:outline-hidden focus:border-white"/>
 
       <div class="font-light"> > [PASSWORD]</div>
-      <input ref="loginInput"
-             v-model="password"
+      <input v-model="password"
              type="password"
              @keydown.enter="loginUser"
              placeholder="Enter password..."

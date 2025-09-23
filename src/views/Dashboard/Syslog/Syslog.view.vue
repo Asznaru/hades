@@ -86,7 +86,7 @@ onUnmounted(() => {
   <template v-for="log in logEntries">
     <div class="flex w-full my-1">
       ~ <div class="text-neutral-600 px-2">{{ log.time }}</div>
-      <div class="text-left mx-3 w-[75px]" :class="{'text-rose-300 font-bold blink' : log.level === 'CRITICAL', 'text-rose-800' : log.level === 'ERROR', 'text-yellow-800' : log.level === 'WARN', 'text-indigo-800' : log.level === 'INFO'}">{{log.level}}</div>
+      <div class="text-left mx-3 w-[75px]" :class="{'text-rose-400 font-bold blink' : log.level === 'CRITICAL', 'text-rose-200' : log.level === 'ERROR', 'text-yellow-200' : log.level === 'WARN', 'text-indigo-300' : log.level === 'INFO'}">{{log.level}}</div>
       <div class="text-left text-slate-400 mr-3">{{ log.process}}</div>
       <div class="text-right mr-0 ml-auto text-slate-500">{{log.message}}</div>
     </div>
