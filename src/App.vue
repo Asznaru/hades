@@ -1,29 +1,32 @@
-<template>
-  <div id="nav">
-    <router-link to="/">Home</router-link>|
-    <router-link to="/about">About</router-link>
-  </div>
-  <img alt="Vue logo" src="@/assets/images/logo.png" width="120" />
-  <router-view />
-</template>
+<script setup lang="ts">
+import {useGlobalStore} from "./store";
+import {storeToRefs} from "pinia";
+import {onMounted} from "vue";
+import router from "./router";
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
+const store = useGlobalStore()
+
+const {user} = storeToRefs(store)
+const { playBeep } = useGlobalStore()
+
+onMounted(async() => {
+  // window.addEventListener('keydown', playBeep)
+
+  const cookies = document.cookie.split('; ')
+  for(let cookie of cookies) {
+    const [ key, value ] = cookie.split('=')
+    if(key && key === 'hades' && value && value.length > 3) {
+      await router.push({name: 'MainMenu'})
+    } else {
+      await router.push({name: 'login'})
     }
   }
-}
+})
+</script>
+
+<template>
+  <RouterView/>
+</template>
+
+<style scoped>
 </style>

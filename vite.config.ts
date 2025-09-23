@@ -1,14 +1,16 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import eslintPLugin from "vite-plugin-eslint"
-import { resolve } from 'path'
+import tailwindcss from '@tailwindcss/vite'
+import path from 'path'
 
-// https://vitejs.dev/config/
 export default defineConfig({
+  plugins: [
+    vue(),
+    tailwindcss()
+  ],
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src'),
+      '@': path.resolve(__dirname, './src'),
     },
   },
-  plugins: [vue(), eslintPLugin()]
 })
