@@ -1,6 +1,17 @@
 <script setup lang="ts">
-import {onMounted} from "vue";
+import {onMounted, watch} from "vue";
+import { useRoute } from 'vue-router';
+import { useGlobalStore } from "./store";
 import router from "./router";
+import Loading from './components/Loading.component.vue'
+import {storeToRefs} from "pinia";
+
+const route = useRoute();
+const store = useGlobalStore()
+const { visibleLoading } = storeToRefs(store)
+watch(() => route.fullPath, () => {
+  visibleLoading.value = true
+})
 
 onMounted(async() => {
   // window.addEventListener('keydown', playBeep)
@@ -18,7 +29,11 @@ onMounted(async() => {
 </script>
 
 <template>
-  <RouterView/>
+  <div>
+    <Loading />
+  </div>
+
+  <RouterView />
 </template>
 
 <style scoped>

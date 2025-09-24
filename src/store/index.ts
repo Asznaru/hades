@@ -6,6 +6,8 @@ import router from "../router/index.ts";
 export const useGlobalStore = defineStore('globalStore', () => {
   const audio = new Audio(beep)
 
+  const visibleLoading = ref(false)
+
   const hadesLogo = ref(`
 ██   ██  █████  ██████  ███████ ███████ 
 ██   ██ ██   ██ ██   ██ ██      ██      
@@ -22,7 +24,7 @@ export const useGlobalStore = defineStore('globalStore', () => {
 
   const user = ref('Admin')
 
-  const activeChannel = ref(0)
+  const activeChannel = ref(-1)
 
   const changeChannel = async (payload: KeyboardEvent) => {
     if(['s','c','e','d'].includes(payload.key)){
@@ -78,6 +80,7 @@ export const useGlobalStore = defineStore('globalStore', () => {
     }
   }
   return {
+    visibleLoading,
     playBeep,
     hadesLogo,
     user,
