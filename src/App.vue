@@ -1,13 +1,6 @@
 <script setup lang="ts">
-import {useGlobalStore} from "./store";
-import {storeToRefs} from "pinia";
 import {onMounted} from "vue";
 import router from "./router";
-
-const store = useGlobalStore()
-
-const {user} = storeToRefs(store)
-const { playBeep } = useGlobalStore()
 
 onMounted(async() => {
   // window.addEventListener('keydown', playBeep)

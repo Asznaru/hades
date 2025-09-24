@@ -15,7 +15,7 @@ const statusClass = computed(() => (login.value.length > 3 && password.value.len
 
 const store = useGlobalStore()
 
-const { hadesLogo, user } = storeToRefs(store)
+const { hadesLogo } = storeToRefs(store)
 
 onMounted(async() => {
   const cookies = document.cookie.split('; ')
@@ -27,6 +27,7 @@ onMounted(async() => {
   }
 
   await nextTick()
+  //@ts-ignore
   loginInput.value.focus()
 })
 

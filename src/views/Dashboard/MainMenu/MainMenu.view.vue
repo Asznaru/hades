@@ -15,10 +15,6 @@ const menu = ref([
   { name: '[d] DARKNET', description: 'Network Diagnostics' }
 ])
 
-const enterChannel = () => {
-
-}
-
 onMounted(() => {
   window.addEventListener('keydown', changeChannel)
 })

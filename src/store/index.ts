@@ -1,4 +1,4 @@
-import { ref, type Ref } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import beep from '@/assets/bip.mp3'
 import router from "../router/index.ts";
@@ -24,7 +24,7 @@ export const useGlobalStore = defineStore('globalStore', () => {
 
   const activeChannel = ref(0)
 
-  const changeChannel = async (payload) => {
+  const changeChannel = async (payload: KeyboardEvent) => {
     if(['s','c','e','d'].includes(payload.key)){
       switch(payload.key){
         case 's':
@@ -63,7 +63,7 @@ export const useGlobalStore = defineStore('globalStore', () => {
           await router.push({name: 'Darknet'})
           break;
       }
-    } else if( palyoad.key === 'Esc') {
+    } else if( payload.key === 'Esc') {
       await router.push({name: 'MainMenu'})
     }
   }
@@ -72,7 +72,7 @@ export const useGlobalStore = defineStore('globalStore', () => {
     audio.play()
   }
 
-  const checkIfEscape = async (payload) => {
+  const checkIfEscape = async (payload: KeyboardEvent) => {
     if(payload.key === 'Escape') {
       await router.push({name: 'MainMenu'})
     }
