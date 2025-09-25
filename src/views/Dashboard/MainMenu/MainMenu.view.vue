@@ -12,7 +12,8 @@ const menu = ref([
   { name: '[s] SYSLOG', description: 'System logs and monitoring' },
   { name: '[c] CHAT', description: 'Secure Communications' },
   { name: '[e] ECHO', description: 'Network Diagnostics' },
-  { name: '[d] DARKNET', description: 'Network Diagnostics' }
+  { name: '[n] ENCRYPTING', description: 'Network Diagnostics' },
+  { name: '[y] HADES EYE', description: 'Real-time behavioral monitoring' }
 ])
 
 onMounted(() => {

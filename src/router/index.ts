@@ -5,7 +5,8 @@ import MainMenu from '../views/Dashboard/MainMenu/MainMenu.view.vue'
 import Syslog from '../views/Dashboard/Syslog/Syslog.view.vue'
 import Chat from '../views/Dashboard/Chat/Chat.view.vue'
 import Echo from '../views/Dashboard/Echo/Echo.view.vue'
-import Darknet from '../views/Dashboard/Darknet/Darknet.view.vue'
+import Encrypting from '../views/Dashboard/Encrypting/Encrypting.vue'
+import HadesEye from '../views/Dashboard/HadesEye/HadesEye.view.vue'
 
 const routes = [
   {
@@ -34,14 +35,19 @@ const routes = [
         component: Echo
       },
       {
-        path: '/dashboard/darknet',
-        name: 'Darknet',
-        component: Darknet
+        path: '/dashboard/encrypting',
+        name: 'Encrypting',
+        component: Encrypting
       },
       {
         path: '/dashboard/chat',
         name: 'Chat',
         component: Chat
+      },
+      {
+        path: '/dashboard/hades-eye',
+        name: 'Hades eye',
+        component: HadesEye
       }
     ]
   }

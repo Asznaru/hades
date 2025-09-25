@@ -13,7 +13,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-darknet
+Encrypting
 </template>
 
 <style scoped>

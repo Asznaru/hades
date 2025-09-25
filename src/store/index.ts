@@ -107,8 +107,8 @@ export const useGlobalStore = defineStore('globalStore', () => {
 
   // -----------------------------
   // Obsługa zmiany kanału i klawiszy
-  const channelMap: Record<string, number> = { s: 0, c: 1, e: 2, d: 3 }
-  const routeMap = ['Syslog', 'Chat', 'Echo', 'Darknet']
+  const channelMap: Record<string, number> = { s: 0, c: 1, e: 2, n: 3, y: 4 }
+  const routeMap = ['Syslog', 'Chat', 'Echo', 'Encrypting', 'Hades eye']
 
   const changeChannel = async (payload: KeyboardEvent) => {
     if (channelMap[payload.key] !== undefined) {
