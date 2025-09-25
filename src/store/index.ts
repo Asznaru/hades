@@ -71,7 +71,7 @@ export const useGlobalStore = defineStore('globalStore', () => {
 
   // -----------------------------
   // Logowanie użytkownika
-  const loginUser = async (login: string, password: string) => {
+  const loginUser = async (login: string) => {
     loadingType.value = 'API'
     visibleLoading.value = true
     apiStatus.value = 'LOADING'
@@ -111,7 +111,8 @@ export const useGlobalStore = defineStore('globalStore', () => {
   const routeMap = ['Syslog', 'Chat', 'Echo', 'Encrypting', 'Hades eye']
 
   const changeChannel = async (payload: KeyboardEvent) => {
-    if (channelMap[payload.key] !== undefined) {
+    if (payload?.key && channelMap[payload.key] !== undefined) {
+      //@ts-ignore
       activeChannel.value = channelMap[payload.key]
     } else if (payload.key === 'ArrowDown' && activeChannel.value < routeMap.length - 1) {
       activeChannel.value++
@@ -119,6 +120,7 @@ export const useGlobalStore = defineStore('globalStore', () => {
       activeChannel.value--
     } else if (payload.key === 'Enter') {
       if (activeChannel.value >= 0 && activeChannel.value < routeMap.length) {
+        //@ts-ignore
         await routerPushWithLoading(routeMap[activeChannel.value])
       }
     } else if (payload.key === 'Escape') {

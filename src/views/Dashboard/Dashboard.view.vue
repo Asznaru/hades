@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { useGlobalStore } from "../../store";
 import { hadesLogo } from "../../store/helpers.ts";
 
-const store = useGlobalStore()
 </script>
 
 <template>

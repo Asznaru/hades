@@ -2,7 +2,6 @@
 import {onMounted, watch} from "vue";
 import { useRoute } from 'vue-router';
 import { useGlobalStore } from "./store";
-import router from "./router";
 import Loading from './components/Loading.component.vue'
 import {storeToRefs} from "pinia";
 

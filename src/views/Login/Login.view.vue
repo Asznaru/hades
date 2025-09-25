@@ -12,8 +12,6 @@ const status = computed(() => (login.value.length > 3 && password.value.length >
 
 const statusClass = computed(() => (login.value.length > 3 && password.value.length > 3) ? 'text-emerald-500' : 'text-rose-500')
 
-const store = useGlobalStore()
-
 const { loginUser, routerPushWithLoading } = useGlobalStore()
 
 onMounted(async() => {
@@ -43,20 +41,18 @@ onMounted(async() => {
       <div class="font-light"> > [NICKNAME]</div>
       <input ref="loginInput"
              v-model="login"
-             @keydown.enter="loginUser"
              placeholder="Enter nick name..."
              class="text-white shadow-hades p-2 border-[1px] border-gray-600 rounded-xs w-full mt-2 mb-8 focus:outline-hidden focus:border-white"/>
 
       <div class="font-light"> > [PASSWORD]</div>
       <input v-model="password"
              type="password"
-             @keydown.enter="loginUser"
              placeholder="Enter password..."
              class="text-white shadow-hades p-2 border-[1px] border-gray-600 rounded-xs w-full mt-2 mb-8 focus:outline-hidden focus:border-white"/>
 
 
       <button class="mt-4 p-2 !border w-full !rounded-xs !bg-neutral-950 focus:outline-none"
-              @click="loginUser(login, password)"
+              @click="loginUser(login)"
               :class="[btnClass]">> [CONNECT TO SYSTEM]
       </button>
 
