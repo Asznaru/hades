@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { useGlobalStore } from "../../store";
-import {storeToRefs} from "pinia";
 import {computed, nextTick, onMounted, ref} from "vue";
-import router from "../../router";
+import { hadesLogo } from "../../store/helpers.ts";
 
 const loginInput = ref(null)
 const login = ref('')
@@ -15,14 +14,14 @@ const statusClass = computed(() => (login.value.length > 3 && password.value.len
 
 const store = useGlobalStore()
 
-const { hadesLogo } = storeToRefs(store)
+const { loginUser, routerPushWithLoading } = useGlobalStore()
 
 onMounted(async() => {
   const cookies = document.cookie.split('; ')
   for(let cookie of cookies) {
     const [ key, value ] = cookie.split('=')
     if(key && key === 'hades' && value && value.length > 3) {
-      await router.push({name: 'MainMenu'})
+      await routerPushWithLoading('MainMenu')
     }
   }
 
@@ -31,16 +30,7 @@ onMounted(async() => {
   loginInput.value.focus()
 })
 
-const loginUser = async() => {
-  if(login.value.length > 3) {
-    const date = new Date();
-    date.setTime(date.getTime() + 24*60*60*1000)
-    const expires = `expires=${date.toUTCString()}`
-    document.cookie = `hades=${login.value}; ${expires}; path=/`;
-    login.value = ''
-    await router.push({name: 'MainMenu'})
-  }
-}
+
 </script>
 
 <template>
@@ -66,7 +56,7 @@ const loginUser = async() => {
 
 
       <button class="mt-4 p-2 !border w-full !rounded-xs !bg-neutral-950 focus:outline-none"
-              @click="loginUser"
+              @click="loginUser(login, password)"
               :class="[btnClass]">> [CONNECT TO SYSTEM]
       </button>
 

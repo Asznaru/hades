@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import { useGlobalStore } from "../../store";
-import {storeToRefs} from "pinia";
+import { hadesLogo } from "../../store/helpers.ts";
 
 const store = useGlobalStore()
-
-const { hadesLogo } = storeToRefs(store)
-
 </script>
 
 <template>

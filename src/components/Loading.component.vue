@@ -1,73 +1,36 @@
-<script setup>
-import { ref, watch } from "vue";
-import { useGlobalStore } from "../store/index.js";
-import { storeToRefs } from "pinia";
+<script setup lang="ts">
+import { computed, ref, watch } from 'vue'
+import { useGlobalStore } from '../store/index.ts'
+import { storeToRefs } from 'pinia'
 
 const store = useGlobalStore()
-const { visibleLoading } = storeToRefs(store)
+const { visibleLoading, progress, apiStatus } = storeToRefs(store)
 
-const progress = ref(0);
-const blink = ref(false);
-const status = ref('LOADING');
-const bar = ref("");
+// Pasek wypełnienia w postaci znaków
+const bar = computed(() => {
+  const filled = Math.floor(progress.value / 3)
+  return '█'.repeat(filled).padEnd(33, ' ')
+})
 
-let blinkInterval;
-let progressInterval;
+// --- Blink dla SUCCESS lub FORBIDDEN ---
+const blink = ref(false)
+let blinkInterval: number | undefined
 
-watch(() => progress.value, (newValue) => {
-  status.value = newValue >= 100 ? 'SUCCESS' : 'LOADING';
-});
-
-watch(() => status.value, (newValue) => {
-  if (newValue === 'SUCCESS') {
-    let toggle = false;
-    blinkInterval = setInterval(() => {
-      toggle = !toggle;
-      blink.value = toggle;
-    }, 100);
+watch(apiStatus, (newStatus) => {
+  if (newStatus === 'SUCCESS' || newStatus === 'FORBIDDEN') {
+    let toggle = false
+    if (blinkInterval) clearInterval(blinkInterval)
+    blinkInterval = window.setInterval(() => {
+      toggle = !toggle
+      blink.value = toggle
+    }, 100)
 
     setTimeout(() => {
-      clearInterval(blinkInterval);
-      blink.value = false;
-      visibleLoading.value = false;
-      progress.value = 0;
-      bar.value = "";
-      status.value = 'LOADING';
-    }, 900);
-  } else {
-    blink.value = false;
+      if (blinkInterval) clearInterval(blinkInterval)
+      blink.value = false
+    }, 900) // czas migotania 0.9s
   }
-});
-
-watch(() => visibleLoading.value, (newValue) => {
-  if (newValue) {
-    // reset
-    progress.value = 0;
-    bar.value = "";
-    status.value = 'LOADING';
-
-    const minTime = 200;
-    const maxTime = 1200;
-    const totalTime = Math.random() * (maxTime - minTime) + minTime;
-
-    const intervalTime = 50; // ms
-    const steps = totalTime / intervalTime;
-    const increment = 100 / steps; // o ile zwiększać progress w każdym kroku
-
-    progressInterval = setInterval(() => {
-      if (progress.value < 100) {
-        progress.value += increment;
-        if (progress.value > 100) progress.value = 100;
-        const filled = Math.floor(progress.value / 3);
-        bar.value = "█".repeat(filled).padEnd(33, " ");
-      } else {
-        clearInterval(progressInterval);
-      }
-    }, intervalTime);
-  } else {
-    clearInterval(progressInterval);
-  }
-});
+})
 </script>
 
 <template>
@@ -76,16 +39,19 @@ watch(() => visibleLoading.value, (newValue) => {
     <div class="bg-black border border-gray-700 p-6 text-slate-400 font-mono shadow-lg w-[400px]">
       <h2 class="text-xl text-center mb-3 tracking-widest"
           :class="{ 'opacity-0': blink }">
-        [ <span :class="{ 'text-emerald-500' : status === 'SUCCESS', 'text-rose-500' : status === 'ERROR' }">{{ status }}</span> ]
+        <template v-if="apiStatus === 'LOADING'">
+          [ <span>LOADING...</span> ]
+        </template>
+        <template v-else>
+          [ <span :class="{ 'text-emerald-500': apiStatus === 'SUCCESS', 'text-rose-500': apiStatus === 'FORBIDDEN' }">
+            {{ apiStatus }}
+          </span> ]
+        </template>
       </h2>
 
       <div class="flex justify-between w-[330px] mx-auto">
-        <span class="block text-slate-400">
-          {{ bar }}
-        </span>
-        <span class="block">
-          {{ progress.toFixed(0) }}%
-        </span>
+        <span class="block text-slate-400">{{ bar }}</span>
+        <span class="block">{{ progress.toFixed(0) }}%</span>
       </div>
     </div>
   </div>

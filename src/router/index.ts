@@ -10,7 +10,7 @@ import Darknet from '../views/Dashboard/Darknet/Darknet.view.vue'
 const routes = [
   {
     path: '/',
-    name: 'login',
+    name: 'Login',
     component: Login
   },
   {

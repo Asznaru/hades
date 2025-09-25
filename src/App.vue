@@ -8,6 +8,7 @@ import {storeToRefs} from "pinia";
 
 const route = useRoute();
 const store = useGlobalStore()
+const { routerPushWithLoading } = useGlobalStore()
 const { visibleLoading } = storeToRefs(store)
 watch(() => route.fullPath, () => {
   visibleLoading.value = true
@@ -20,9 +21,9 @@ onMounted(async() => {
   for(let cookie of cookies) {
     const [ key, value ] = cookie.split('=')
     if(key && key === 'hades' && value && value.length > 3) {
-      await router.push({name: 'MainMenu'})
+      await routerPushWithLoading('MainMenu')
     } else {
-      await router.push({name: 'login'})
+      await routerPushWithLoading('Login')
     }
   }
 })

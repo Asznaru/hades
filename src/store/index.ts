@@ -3,89 +3,148 @@ import { defineStore } from 'pinia'
 import beep from '@/assets/bip.mp3'
 import router from "../router/index.ts";
 
+type LoadingType = 'API' | 'ROUTER' | null
+type ApiStatus = 'LOADING' | 'SUCCESS' | 'FORBIDDEN'
+
 export const useGlobalStore = defineStore('globalStore', () => {
   const audio = new Audio(beep)
-
-  const visibleLoading = ref(false)
-
-  const hadesLogo = ref(`
-██   ██  █████  ██████  ███████ ███████ 
-██   ██ ██   ██ ██   ██ ██      ██      
-███████ ███████ ██   ██ █████   ███████ 
-██   ██ ██   ██ ██   ██ ██           ██ 
-██   ██ ██   ██ ██████  ███████ ███████ 
-                                        
-████████ ███████ ██████  ███    ███ ██ ███    ██  █████  ██      
-   ██    ██      ██   ██ ████  ████ ██ ████   ██ ██   ██ ██      
-   ██    █████   ██████  ██ ████ ██ ██ ██ ██  ██ ███████ ██      
-   ██    ██      ██   ██ ██  ██  ██ ██ ██  ██ ██ ██   ██ ██      
-   ██    ███████ ██   ██ ██      ██ ██ ██   ████ ██   ██ ███████ 
-`);
-
-  const user = ref('Admin')
-
   const activeChannel = ref(-1)
 
-  const changeChannel = async (payload: KeyboardEvent) => {
-    if(['s','c','e','d'].includes(payload.key)){
-      switch(payload.key){
-        case 's':
-          activeChannel.value = 0
-          break;
-        case 'c':
-          activeChannel.value = 1
-          break;
-        case 'e':
-          activeChannel.value = 2
-          break;
-        case 'd':
-          activeChannel.value = 3
-          break;
+  // Modal & progress
+  const visibleLoading = ref(false)
+  const progress = ref(0)
+  const apiStatus = ref<ApiStatus>('LOADING')
+  const loadingType = ref<LoadingType>(null)
+  const pendingStatus = ref<ApiStatus | null>(null)
+  let progressInterval: number | undefined
+
+  // -----------------------------
+  // Animacja progressbaru z synchronizacją statusu
+  const animateProgress = (target: number, duration = 500, onComplete?: () => void) => {
+    if (progressInterval) clearInterval(progressInterval)
+    const intervalTime = 50
+    const steps = duration / intervalTime
+    const increment = (target - progress.value) / steps
+
+    progressInterval = window.setInterval(() => {
+      progress.value = Math.min(progress.value + increment, target)
+
+      // Aktualizacja status dopiero przy ≥99%
+      if (progress.value >= 99 && pendingStatus.value) {
+        apiStatus.value = pendingStatus.value
+        pendingStatus.value = null
       }
-    } else if (payload.key === 'ArrowDown') {
-      if (activeChannel.value < 3) {
-        activeChannel.value++
+
+      if (progress.value >= target) {
+        clearInterval(progressInterval)
+        onComplete?.()
       }
-    } else if (payload.key === 'ArrowUp') {
-      if (activeChannel.value > 0) {
-        activeChannel.value--
-      }
-    } else if ( payload.key === 'Enter') {
-      switch(activeChannel.value) {
-        case 0:
-          await router.push({name: 'Syslog'})
-          break;
-        case 1:
-          await router.push({name: 'Chat'})
-          break;
-        case 2:
-          await router.push({name: 'Echo'})
-          break;
-        case 3:
-          await router.push({name: 'Darknet'})
-          break;
-      }
-    } else if( payload.key === 'Esc') {
-      await router.push({name: 'MainMenu'})
+    }, intervalTime)
+  }
+
+  // -----------------------------
+  // Router navigation z animowanym progressbarem
+  const routerPushWithLoading = async (routeName: string) => {
+    loadingType.value = 'ROUTER'
+    visibleLoading.value = true
+    apiStatus.value = 'LOADING'
+    pendingStatus.value = null
+    progress.value = 0
+
+    // Animacja do 95%
+    animateProgress(95, Math.random() * 700 + 800)
+
+    await router.push({ name: routeName })
+
+    // Doganiamy do 100% + ustawiamy SUCCESS
+    pendingStatus.value = 'SUCCESS'
+    animateProgress(100, 300, () => {
+      setTimeout(() => {
+        visibleLoading.value = false
+        progress.value = 0
+        apiStatus.value = 'LOADING'
+        loadingType.value = null
+        pendingStatus.value = null
+      }, 750)
+    })
+  }
+
+  // -----------------------------
+  // Logowanie użytkownika
+  const loginUser = async (login: string, password: string) => {
+    loadingType.value = 'API'
+    visibleLoading.value = true
+    apiStatus.value = 'LOADING'
+    pendingStatus.value = null
+    progress.value = 0
+
+    // Animacja do 99% w trakcie requestu
+    animateProgress(99, 1500)
+
+    try {
+      // const { data } = await axios.get(`/api/info-api/user/${login}/channels`)
+      pendingStatus.value = 'SUCCESS'
+
+      const date = new Date()
+      date.setTime(date.getTime() + 24 * 60 * 60 * 1000)
+      document.cookie = `hades=${login}; expires=${date.toUTCString()}; path=/`
+
+      await routerPushWithLoading('MainMenu')
+    } catch (e) {
+      pendingStatus.value = 'FORBIDDEN'
+    } finally {
+      animateProgress(100, 300, () => {
+        setTimeout(() => {
+          visibleLoading.value = false
+          progress.value = 0
+          apiStatus.value = 'LOADING'
+          loadingType.value = null
+          pendingStatus.value = null
+        }, 500)
+      })
     }
   }
 
-  const playBeep = () => {
-    audio.play()
+  // -----------------------------
+  // Obsługa zmiany kanału i klawiszy
+  const channelMap: Record<string, number> = { s: 0, c: 1, e: 2, d: 3 }
+  const routeMap = ['Syslog', 'Chat', 'Echo', 'Darknet']
+
+  const changeChannel = async (payload: KeyboardEvent) => {
+    if (channelMap[payload.key] !== undefined) {
+      activeChannel.value = channelMap[payload.key]
+    } else if (payload.key === 'ArrowDown' && activeChannel.value < routeMap.length - 1) {
+      activeChannel.value++
+    } else if (payload.key === 'ArrowUp' && activeChannel.value > 0) {
+      activeChannel.value--
+    } else if (payload.key === 'Enter') {
+      if (activeChannel.value >= 0 && activeChannel.value < routeMap.length) {
+        await routerPushWithLoading(routeMap[activeChannel.value])
+      }
+    } else if (payload.key === 'Escape') {
+      await routerPushWithLoading('MainMenu')
+    }
   }
+
+  // -----------------------------
+  const playBeep = () => audio.play()
 
   const checkIfEscape = async (payload: KeyboardEvent) => {
     if(payload.key === 'Escape') {
-      await router.push({name: 'MainMenu'})
+      await routerPushWithLoading('MainMenu')
     }
   }
+
   return {
-    visibleLoading,
+    checkIfEscape,
     playBeep,
-    hadesLogo,
-    user,
     activeChannel,
     changeChannel,
-    checkIfEscape
+    visibleLoading,
+    progress,
+    apiStatus,
+    loadingType,
+    loginUser,
+    routerPushWithLoading
   }
 })
