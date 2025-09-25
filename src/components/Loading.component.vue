@@ -76,7 +76,7 @@ watch(() => visibleLoading.value, (newValue) => {
     <div class="bg-black border border-gray-700 p-6 text-slate-400 font-mono shadow-lg w-[400px]">
       <h2 class="text-xl text-center mb-3 tracking-widest"
           :class="{ 'opacity-0': blink }">
-        [ {{ status }} ]
+        [ <span :class="{ 'text-emerald-500' : status === 'SUCCESS', 'text-rose-500' : status === 'ERROR' }">{{ status }}</span> ]
       </h2>
 
       <div class="flex justify-between w-[330px] mx-auto">
