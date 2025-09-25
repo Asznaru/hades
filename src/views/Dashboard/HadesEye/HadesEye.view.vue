@@ -72,7 +72,6 @@ onUnmounted(() => {
       <div class="mx-auto border border-gray-600 bg-black w-[40rem] my-1 overflow-hidden">
         <div class="relative w-full pt-[56.25%]">
           <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-            <span class="text-red-500 font-mono text-lg">⚠ OFFLINE</span>
           </div>
 
           <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">

@@ -16,9 +16,9 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://neurobiomyko.tojest.dev',
+        target: 'https://neurobiomyko.tojest.dev/',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
+        // bez rewrite, albo rewrite zachowujące `/api`
       }
     }
   }

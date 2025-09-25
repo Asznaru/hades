@@ -2,6 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import beep from '@/assets/bip.mp3'
 import router from "../router/index.ts";
+import axios from "axios";
 
 type LoadingType = 'API' | 'ROUTER' | null
 type ApiStatus = 'LOADING' | 'SUCCESS' | 'FORBIDDEN'
@@ -82,7 +83,11 @@ export const useGlobalStore = defineStore('globalStore', () => {
     animateProgress(99, 1500)
 
     try {
-      // const { data } = await axios.get(`/api/info-api/user/${login}/channels`)
+      const { data } = await axios.get(`api/info-api/user/${login}/channels`, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
       pendingStatus.value = 'SUCCESS'
 
       const date = new Date()
