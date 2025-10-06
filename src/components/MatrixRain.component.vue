@@ -55,14 +55,15 @@ const draw = () => {
     for (let i = 0; i < columns.length; i++) {
       const char = characters[Math.floor(Math.random() * characters.length)];
       const x = i * fontSize;
+      //@ts-ignore
       const y = columns[i] * fontSize;
-
+      //@ts-ignore
       ctx.fillText(char, x, y);
 
       if (y > canvas.value.height && Math.random() > 0.975) {
         columns[i] = 0;
       }
-
+      //@ts-ignore
       columns[i]++;
     }
   }
