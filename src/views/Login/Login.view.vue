@@ -2,6 +2,7 @@
 import { useGlobalStore } from "../../store";
 import {computed, nextTick, onMounted, ref} from "vue";
 import { hadesLogo } from "../../store/helpers.ts";
+import MatrixRain from "../../components/MatrixRain.component.vue";
 
 const loginInput = ref(null)
 const login = ref('')
@@ -33,11 +34,14 @@ onMounted(async() => {
 
 <template>
   <div class="w-[600px] mx-auto self-center">
+    <MatrixRain :speed="2"
+                color="#45556c"
+                :opacity="1" />
         <pre class="logo leading-[1.1] text-slate-600">
       {{ hadesLogo }}
     </pre>
-    <div class="mb-12 font-light">[SYSTEM ACCESS CONTROL] - Authentication Required</div>
-    <div class="text-[#7fa6ff] font-mono p-6 border border-gray-600 rounded-xs shadow-lg flex flex-col items-start">
+    <div class="mb-12 font-light">[SYSTEM ACCESS CONTROL] - <span class="text-rose-500">Authentication Required</span></div>
+    <div class="text-[#7fa6ff] font-mono p-6 border border-gray-600 rounded-xs shadow-lg flex flex-col items-start bg-black">
       <div class="font-light"> > [NICKNAME]</div>
       <input ref="loginInput"
              v-model="login"

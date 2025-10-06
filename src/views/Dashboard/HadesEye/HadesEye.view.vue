@@ -14,7 +14,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="border border-gray-600 px-8 my-8 w-[75%] mx-auto">
+  <div class="border border-gray-600 px-8 my-8 w-[75%] m-auto">
     <div class="my-2 text-slate-400 text-xl text-left">[HADES EYE] - Camera Network</div>
     <div class="mb-2 text-left text-gray-500">Network Status: <span class="text-emerald-500">ACTIVE</span> | Encryption:
       AES-256 | Active Feeds: <span class="text-yellow-500">3/4</span></div>
@@ -101,7 +101,7 @@ onUnmounted(() => {
           <!-- iframe -->
           <iframe
               class="absolute top-0 left-0 w-full h-full"
-              src="https://www.youtube.com/embed/ubFq-wV3Eic?autoplay=1&mute=1"
+              src="https://www.youtube.com/embed/ccvBttXrGB8?autoplay=1&mute=1"
               title="YouTube video player"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

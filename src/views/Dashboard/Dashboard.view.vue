@@ -1,23 +1,28 @@
 <script setup lang="ts">
 import { hadesLogo } from "../../store/helpers.ts";
+import MatrixRain from "../../components/MatrixRain.component.vue";
 
 </script>
 
 <template>
   <div class="w-full flex flex-col self-stretch mx-auto justify-between">
     <div class="mt-14">
+      <MatrixRain :speed="2"
+                  color="#45556c"
+                  :opacity="1" />
+
       <pre class="logo leading-[1.1] text-slate-600"> {{hadesLogo}} </pre>
       <div class="my-2 text-gray-500">
-        System Status: <span class="text-emerald-700">ONLINE</span> | Access Level: <span class="text-emerald-700">AUTHORIZED</span> | Connection: <span class="text-emerald-700">SECURE</span>
+        System Status: <span class="text-emerald-700 font-bold">ONLINE</span> | Access Level: <span class="text-emerald-700 font-bold">AUTHORIZED</span> | Connection: <span class="text-emerald-700 font-bold">SECURE</span>
       </div>
       <hr class="border-gray-600"/>
     </div>
 
-    <div class="flex flex-col">
+    <div class="flex flex-col bg-black h-full my-auto">
       <router-view />
     </div>
 
-    <div class="border border-gray-600 text-gray-600 m-1 flex justify-between px-8 py-2">
+    <div class="border border-gray-600 text-gray-600 m-1 flex justify-between px-8 py-2 bg-black">
       <div>
         <span class="mr-3">
           <span class="text-white">[↑↓]</span> - Navigate Menu

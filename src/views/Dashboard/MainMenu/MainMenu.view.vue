@@ -12,7 +12,7 @@ const menu = ref([
   { name: '[s] SYSLOG', description: 'System logs and monitoring' },
   { name: '[c] CHAT', description: 'Secure Communications' },
   { name: '[e] ECHO', description: 'Network Diagnostics' },
-  { name: '[n] ENCRYPTING', description: 'Network Diagnostics' },
+  { name: '[n] CRYPTO_IO', description: 'Encryption and decryption' },
   { name: '[y] HADES EYE', description: 'Real-time behavioral monitoring' }
 ])
 
@@ -30,7 +30,7 @@ onUnmounted(() => {
   [MAIN MENU] - Select Module
   </div>
 
-  <div class="flex flex-col mx-auto">
+  <div class="flex flex-col m-auto">
     <template v-for="(item, index) in menu">
       <div class="border border-gray-600 py-2 w-[40rem] my-1 flex justify-between px-4"
            :class="{'bg-slate-100 text-gray-900' : activeChannel === index}">
