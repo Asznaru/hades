@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import beep from '@/assets/bip.mp3'
 import router from "../router/index.ts";
-import axios from "axios";
+// import axios from "axios";
 
 type LoadingType = 'API' | 'ROUTER' | null
 type ApiStatus = 'LOADING' | 'SUCCESS' | 'FORBIDDEN'
