@@ -6,6 +6,10 @@ const { checkIfEscape } = useGlobalStore()
 
 const text = ref('')
 const textInput = ref(null)
+
+const checkText = () => {
+  return null
+}
 onMounted(async () => {
   window.addEventListener('keydown', checkIfEscape)
 
@@ -39,7 +43,7 @@ onUnmounted(() => {
            class="text-white shadow-hades p-2 border-[1px] border-gray-600 rounded-xs w-full focus:outline-hidden focus:border-white"/>
 
     <button class="p-2 !border w-[30%] ml-2 !rounded-xs !bg-neutral-950 focus:outline-none"
-            @click="loginUser(login)"> [EXECUTE]
+            @click="checkText"> [EXECUTE]
     </button>
   </div>
 </template>
