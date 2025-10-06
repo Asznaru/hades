@@ -83,11 +83,11 @@ export const useGlobalStore = defineStore('globalStore', () => {
     animateProgress(99, 1500)
 
     try {
-      await axios.get(`api/info-api/user/${login}/channels`, {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      })
+      // await axios.get(`api/info-api/user/${login}/channels`, {
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   }
+      // })
       pendingStatus.value = 'SUCCESS'
 
       const date = new Date()
