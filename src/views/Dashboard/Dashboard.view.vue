@@ -7,18 +7,19 @@ import MatrixRain from "../../components/MatrixRain.component.vue";
 <template>
   <div class="w-full flex flex-col self-stretch mx-auto justify-between">
     <div class="mt-14">
-      <MatrixRain :speed="2"
+      <MatrixRain :speed="1.5"
                   color="#45556c"
-                  :opacity="1" />
+                  :opacity="0.4" />
 
       <pre class="logo leading-[1.1] text-slate-600"> {{hadesLogo}} </pre>
-      <div class="my-2 text-gray-500">
-        System Status: <span class="text-emerald-700 font-bold">ONLINE</span> | Access Level: <span class="text-emerald-700 font-bold">AUTHORIZED</span> | Connection: <span class="text-emerald-700 font-bold">SECURE</span>
-      </div>
       <hr class="border-gray-600"/>
     </div>
 
     <div class="flex flex-col bg-black h-full my-auto">
+      <div class="mt-6 text-gray-500">
+        System Status: <span class="text-emerald-700 font-bold">ONLINE</span> | Access Level: <span class="text-emerald-700 font-bold">AUTHORIZED</span> | Connection: <span class="text-emerald-700 font-bold">SECURE</span>
+      </div>
+
       <router-view />
     </div>
 

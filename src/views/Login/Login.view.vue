@@ -34,9 +34,9 @@ onMounted(async() => {
 
 <template>
   <div class="w-[600px] mx-auto self-center">
-    <MatrixRain :speed="2"
+    <MatrixRain :speed="1.5"
                 color="#45556c"
-                :opacity="1" />
+                :opacity="0.4" />
         <pre class="logo leading-[1.1] text-slate-600">
       {{ hadesLogo }}
     </pre>

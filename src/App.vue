@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router';
 import { useGlobalStore } from "./store";
 import Loading from './components/Loading.component.vue'
 import {storeToRefs} from "pinia";
+import GlitchEffect from './components/GlitchEffect.component.vue'
 
 const route = useRoute();
 const store = useGlobalStore()
@@ -29,6 +30,7 @@ onMounted(async() => {
 </script>
 
 <template>
+  <GlitchEffect />
   <div>
     <Loading />
   </div>
