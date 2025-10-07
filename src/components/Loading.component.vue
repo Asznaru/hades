@@ -35,7 +35,8 @@ watch(apiStatus, (newStatus) => {
 
 <template>
   <div v-if="visibleLoading"
-       class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50">
+       class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-2">
+
     <div class="bg-black border border-gray-700 p-6 text-slate-400 font-mono shadow-lg w-[400px]">
       <h2 class="text-xl text-center mb-3 tracking-widest"
           :class="{ 'opacity-0': blink }">

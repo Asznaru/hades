@@ -33,12 +33,11 @@ onMounted(async() => {
 </script>
 
 <template>
+    <div>
+    <GlitchEffect />
 
-  <GlitchEffect />
+    <HackerGlitchOverlay hacked :installing="progress" :time="5000"/>
 
-  <HackerGlitchOverlay hacked :installing="progress" :time="5000"/>
-
-  <div>
     <Loading />
   </div>
 
