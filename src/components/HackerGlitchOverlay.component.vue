@@ -36,8 +36,8 @@ const barLength = 20
 
 const currentBars = ref(0)
 
+//@ts-ignore
 let intervalId: number | null = null
-
 
 const overlayStyle = computed(() => ({
   opacity: props.opacity,
@@ -107,6 +107,7 @@ const randomGlitch = () => {
 
   if (Math.random() > (props.hacked ? 0.5 : 0.8)) {
     const colors = ['rgba(255, 0, 0, 0.5)', 'rgba(0, 255, 255, 0.5)'];
+    //@ts-ignore
     flashColor.value = colors[Math.floor(Math.random() * colors.length)];
     setTimeout(() => {
       flashColor.value = 'transparent';
