@@ -1,15 +1,18 @@
 <script setup lang="ts">
-import {onMounted, watch} from "vue";
+import {onMounted, watch, ref} from "vue";
 import { useRoute } from 'vue-router';
 import { useGlobalStore } from "./store";
 import Loading from './components/Loading.component.vue'
 import {storeToRefs} from "pinia";
 import GlitchEffect from './components/GlitchEffect.component.vue'
+import HackerGlitchOverlay from './components/HackerGlitchOverlay.component.vue'
 
 const route = useRoute();
 const store = useGlobalStore()
 const { routerPushWithLoading } = useGlobalStore()
 const { visibleLoading } = storeToRefs(store)
+const progress = ref(54)
+
 watch(() => route.fullPath, () => {
   visibleLoading.value = true
 })
@@ -30,7 +33,11 @@ onMounted(async() => {
 </script>
 
 <template>
+
   <GlitchEffect />
+
+  <HackerGlitchOverlay hacked :installing="progress" :time="5000"/>
+
   <div>
     <Loading />
   </div>

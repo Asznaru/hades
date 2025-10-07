@@ -32,10 +32,10 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  minInterval: 1000,
-  maxInterval: 8000,
-  duration: 200,
-  scanlineSpeed: 100
+  minInterval: 1500,
+  maxInterval: 4500,
+  duration: 700,
+  scanlineSpeed: 500
 });
 
 const isGlitching = ref(false);
