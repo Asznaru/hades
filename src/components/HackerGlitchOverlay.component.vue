@@ -265,7 +265,7 @@ onUnmounted(() => {
 <template>
   <div
       class="fixed inset-0 z-50 overflow-hidden transition-all duration-300"
-      :class="{ 'cursor-not-allowed': hacked }"
+      :class="{ 'cursor-not-allowed bg-amber-800/70': hacked }"
       :style="overlayStyle"
   >
     <div
@@ -273,7 +273,7 @@ onUnmounted(() => {
         :class="{ 'animate-pulse': hacked }"
         :style="{
           backgroundColor: flashColor,
-          background: 'linear-gradient(to bottom, rgba(220, 38, 38, 0.1) 0%, transparent 50%, rgba(6, 182, 212, 0.1) 100%)'
+          background: 'linear-gradient(to bottom, rgba(220, 38, 38, 0.15) 0%, transparent 50%, rgba(6, 182, 212, 0.1) 100%)'
         }"
     ></div>
 
@@ -392,7 +392,7 @@ onUnmounted(() => {
       }"
     >
       <div class="text-center px-4">
-        <div>[ HADES KERNEL REBOOT ]</div>
+        <div v-if="hacked">[ HADES KERNEL REBOOT ]</div>
         <div
             v-if="hacked"
             class="text-white text-3xl md:text-4xl mt-4 animate-pulse"
@@ -452,14 +452,14 @@ onUnmounted(() => {
           }"
         >
           <div class="flex items-center gap-3">
-            <span class="text-red-500 animate-pulse">INSTALLING</span>
+            <span class="font-bold text-2xl animate-pulse">INSTALLING</span>
             <div class="flex items-center gap-1">
               <span>[</span>
               <div class="flex">
         <span
             v-for="i in barLength"
             :key="i"
-            class="transition-all duration-150"
+            class="transition-all duration-600"
             :class="i <= currentBars ? 'text-cyan-400' : 'text-gray-600'"
         >
           {{ i <= currentBars ? '|' : '.' }}
